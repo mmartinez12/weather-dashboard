@@ -104,12 +104,12 @@ h3 {
     width: 100%;
 }
 
-#uv-el {
+#uv-index {
     display: flex;
     align-items: center;
 }
 
-#uv-col {
+#uv-color {
     padding: 5px;
     border-radius: 5px;
     color: white;
