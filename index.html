@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>Weather Dashboard</title>
+</head>
+
+<body>
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
+    <main>
+        <div class="search-bar">
+            <div id="form">
+                <h3>Search for a City:</h3>
+                <form>
+                    <input name="search-city" id="search-city" type="text" autofocus="true">
+                    <br>
+                    <button type="submit" id="submit-city" class="btn">Search</button>
+                </form>
+            </div>
+            <div class="search-history" id="history">
+                <ul class="previous-search" id="previous-search"></ul>
+            </div>
+            <button type="button" id="reset" class="btn">Reset Searches</button>
+        </div>
+        <div class="weather-display" id="weather-display">
+            <div class="current-weather" id="current-weather"></div>
+            <h3 id="forecast"></h3>
+            <div class="five-day-forecast" id="five-day-forecast">
+                <div class="card-container" id="card-container"></div>
+            </div>
+        </div>
+
+    </main>
+    <script type="text/JavaScript" src=" https://MomentJS.com/downloads/moment.js"></script>
+    <script type="text/css" src="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.12/css/weather-icons-wind.css"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+
+</html>
