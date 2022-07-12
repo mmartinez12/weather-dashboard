@@ -1,17 +1,16 @@
 var userCity = document.getElementById("search-city");
 var submitBtn = document.getElementById("submit-city");
 var previousSearchDisp = document.getElementById("previous-searches");
-var weatherDisp = document.querySelectorAll("#weather-display");
-var fiveDayCard = document.getElementById("five-day-card");
 var resetBtn = document.getElementById("reset");
+var weatherDisp = document.querySelectorAll("#weather-display");
 var forecastDisp = document.getElementById("forecast");
-var apiKey = "309fbc7e18cf879d452be18a2a9572e8";
+var fiveDayCard = document.getElementById("five-day-card");
 var currentDay = moment().format('l');
-var clickedPrevious = "";
 var previousSearches = [];
-weatherDisp.textContent = "";
+var clickedPrevious = "";
+var apiKey = "309fbc7e18cf879d452be18a2a9572e8";
 forecastDisp.textContent = "";
-
+weatherDisp.textContent = "";
 
 // save the previous searches
 var saveSearch = function () {
@@ -27,16 +26,16 @@ var loadPrevious = function () {
 };
 
 // use location API to get coordinates of city
-var getLocation = function (city) {
+var fetchLocation = function (city) {
     var locationApiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
     fetch(locationApiUrl)
         .then(function (response) {
         response.json()
         .then(function (data) {
             console.log(data);
-            var lat = data[0].lat;
-            var lon = data[0].lon;
-            getWeather(lat, lon);
+            var latitude = data[0].lat;
+            var longitude = data[0].lon;
+            fetchWeather(latitude, longitude);
             });
         });
     savePreviousSearch();
@@ -47,15 +46,15 @@ var submitCity = function (event) {
     event.preventDefault();
     var chosenCity = userCity.value.trim();
     if (chosenCity) {
-        getLocation(chosenCity);
+        fetchLocation(chosenCity);
         previousSearches.push(chosenCity);
         userCity.value = "";
     };
 };
 
 // get coordinates from location API to display current and five day forecasts
-var getWeather = function (lat, lon) {
-    var weatherApiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + apiKey;
+var fetchWeather = function (latitude, longitude) {
+    var weatherApiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + apiKey;
     var currentWeather = document.getElementById("current-weather");
     fetch(weatherApiUrl).then(function (response) {
         response.json().then(function (data) {
@@ -164,7 +163,7 @@ document.addEventListener("click", function (event) {
     if (event.target.id == "previous-search") {
         var savedSearch = event.target.textContent;
         clickedPrevious = savedSearch;
-        getLocation(savedSearch);
+        fetchLocation(savedSearch);
     };
 });
 
