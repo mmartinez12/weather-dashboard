@@ -1,0 +1,14 @@
+var searchedCity = document.getElementById("search-city");
+var submitButton = document.getElementById("submit-city");
+var historyButton = document.getElementById("history");
+var previousSearchEl = document.getElementById("previous-search");
+var weatherDisplay = document.querySelectorAll("#weather-display");
+var cardConEl = document.getElementById("card-container");
+var resetBtn = document.getElementById("reset");
+var forecastEl = document.getElementById("forecast");
+var apiKey = "309fbc7e18cf879d452be18a2a9572e8";
+var currentDay = moment().format('l');
+var clickedOldSearch = ""
+var previousSearch = [];
+weatherDisplay.textContent = "";
+forecastEl.textContent = "";
