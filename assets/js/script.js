@@ -1,6 +1,5 @@
 var userCity = document.getElementById("search-city");
 var submitBtn = document.getElementById("submit-city");
-var searchHistBtn = document.getElementById("search-history");
 var previousSearchDisp = document.getElementById("previous-searches");
 var weatherDisp = document.querySelectorAll("#weather-display");
 var fiveDayCard = document.getElementById("five-day-card");
