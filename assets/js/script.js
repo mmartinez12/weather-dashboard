@@ -1,6 +1,6 @@
-var searchedCity = document.getElementById("search-city");
-var submitButton = document.getElementById("submit-city");
-var historyButton = document.getElementById("history");
+var userCity = document.getElementById("search-city");
+var submitBtn = document.getElementById("submit-city");
+var searchHistBtn = document.getElementById("search-history");
 var previousSearchEl = document.getElementById("previous-searches");
 var weatherDisplay = document.querySelectorAll("#weather-display");
 var cardConEl = document.getElementById("card-container");
@@ -8,22 +8,22 @@ var resetBtn = document.getElementById("reset");
 var forecastEl = document.getElementById("forecast");
 var apiKey = "309fbc7e18cf879d452be18a2a9572e8";
 var currentDay = moment().format('l');
-var clickedOldSearch = "";
-var previousSearch = [];
+var clickedPrevious = "";
+var previousSearches = [];
 weatherDisplay.textContent = "";
 forecastEl.textContent = "";
 
 
 // save the previous searches
 var newSave = function () {
-    localStorage.setItem('previousSearches', JSON.stringify(previousSearch));
+    localStorage.setItem('previousSearches', JSON.stringify(previousSearches));
 };
 // load the previous searches
 var loadPrevious = function () {
     if (localStorage.getItem('previousSearches') == null) {
-        localStorage.setItem('previousSearches', JSON.stringify(previousSearch))
+        localStorage.setItem('previousSearches', JSON.stringify(previousSearches))
     };
-    previousSearch = JSON.parse(localStorage.getItem('previousSearches'));
+    previousSearches = JSON.parse(localStorage.getItem('previousSearches'));
     savedPreviousSearch();
 };
 
@@ -44,13 +44,13 @@ var getLocation = function (city) {
 };
 
 // get value of user's city input
-var citySubmitHandler = function (event) {
+var submitCity = function (event) {
     event.preventDefault();
-    var sumbittedCity = searchedCity.value.trim();
-    if (sumbittedCity) {
-        getLocation(sumbittedCity);
-        previousSearch.push(sumbittedCity);
-        searchedCity.value = "";
+    var chosenCity = userCity.value.trim();
+    if (chosenCity) {
+        getLocation(chosenCity);
+        previousSearches.push(chosenCity);
+        userCity.value = "";
     };
 };
 
@@ -68,10 +68,10 @@ var getWeather = function (lat, lon) {
                 // display current weather
                 var currentCity = document.createElement("h3");
                 // check if user clicked on a previous search 
-                if (previousSearch[i] == undefined) {
-                    currentCity.textContent = clickedOldSearch + " (" + currentDay + ")";
+                if (previousSearches[i] == undefined) {
+                    currentCity.textContent = clickedPrevious + " (" + currentDay + ")";
                 } else {
-                    currentCity.textContent = previousSearch[i] + " (" + currentDay + ")";
+                    currentCity.textContent = previousSearches[i] + " (" + currentDay + ")";
                 };
                 currentWeather.appendChild(currentCity);
                 var currentTemp = document.createElement("li");
@@ -144,10 +144,10 @@ var getWeather = function (lat, lon) {
 var savedPreviousSearch = function () {
     previousSearchEl.innerHTML = "";
 
-    for (i = 0; i < previousSearch.length; i++) {
+    for (i = 0; i < previousSearches.length; i++) {
         var previousCity = document.createElement("p")
-        previousCity.textContent = previousSearch[i];
-        previousCity.setAttribute("class", previousSearch[i]);
+        previousCity.textContent = previousSearches[i];
+        previousCity.setAttribute("class", previousSearches[i]);
         previousCity.setAttribute("id", "previous-search");
         previousSearchEl.appendChild(previousCity);
     };
@@ -157,7 +157,7 @@ var savedPreviousSearch = function () {
 
 // clear search history with reset button
 var searchReset = function (event) {
-    previousSearch = [];
+    previousSearches = [];
     localStorage.clear();
     previousSearchEl.innerHTML = "";
 };
@@ -166,13 +166,13 @@ var searchReset = function (event) {
 document.addEventListener("click", function (event) {
     if (event.target.id == "previous-search") {
         var oldSearch = event.target.textContent;
-        clickedOldSearch = oldSearch;
+        clickedPrevious = oldSearch;
         getLocation(oldSearch);
     };
 });
 
 // submit button event listener 
-submitButton.addEventListener("click", citySubmitHandler);
+submitBtn.addEventListener("click", submitCity);
 
 // reset button event listener 
 resetBtn.addEventListener("click", searchReset);
