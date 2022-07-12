@@ -60,76 +60,76 @@ var fetchWeather = function (latitude, longitude) {
         response.json().then(function (data) {
             currentWeather.textContent = "";
             fiveDayCard.textContent = "";
-            // display current weather
+            // display current city
             var currentCity = document.createElement("h3");
-            // check if user clicked on a previous search 
+                // check if user clicked on a previous search
                 if (previousSearches[i] == undefined) {
                     currentCity.textContent = clickedPrevious + " (" + currentDay + ")";
                 } else {
                     currentCity.textContent = previousSearches[i] + " (" + currentDay + ")";
                 };
-                // display city with weather icon
+                // display city's current weather
                 currentWeather.appendChild(currentCity);
-                var currentIcon = document.createElement("li");
+            // display corresponding weather icon from icon API
+            var currentIcon = document.createElement("li");
                 currentIcon.innerHTML = '<img src="http://openweathermap.org/img/wn/' + data.current.weather[0].icon + '@2x.png" width="50px" height="50px" alt="">';
                 currentCity.appendChild(currentIcon);
-                // display temp, wind, and humidity
-                var currentTemp = document.createElement("li");
+            // display temp, wind, and humidity
+            var currentTemp = document.createElement("li");
                 currentTemp.textContent = "Temp: " + data.current.temp + "°F";
                 currentWeather.appendChild(currentTemp);
-                var currentWind = document.createElement("li");
+            var currentWind = document.createElement("li");
                 currentWind.textContent = "Wind: " + data.current.wind_speed + " MPH";
                 currentWeather.appendChild(currentWind);
-                var currentHum = document.createElement("li");
+            var currentHum = document.createElement("li");
                 currentHum.textContent = "Humidity: " + data.current.humidity + " %";
                 currentWeather.appendChild(currentHum);
-                // display UV index with color scale
-                var uvIndex = document.createElement("li");
+            // display UV index with color scale
+            var uvIndex = document.createElement("li");
                 uvIndex.setAttribute("id", "uv-index");
                 currentWeather.appendChild(uvIndex);
-                var currentUvIndex = document.createElement("div");
+            var currentUvIndex = document.createElement("div");
                 currentUvIndex.textContent = "UV Index: ";
                 uvIndex.appendChild(currentUvIndex);
-                var currentUvColor = document.createElement("div");
+            var currentUvColor = document.createElement("div");
                 currentUvColor.textContent = data.current.uvi;
                 currentUvColor.setAttribute("id", "uv-color");
                 if (data.current.uvi < 2) {
-                    currentUvColor.setAttribute("style", "background: green;");
+                    currentUvColor.setAttribute("style", "background: rgb(24, 251, 20); color: black;");
                 } else if (2 < data.current.uvi < 5) {
-                    currentUvColor.setAttribute("style", "background: yellow; color: black;");
+                    currentUvColor.setAttribute("style", "background: rgb(251, 240, 20); color: black;");
                 } else if (6 < data.current.uvi < 7) {
-                    currentUvColor.setAttribute("style", "background: orange;");
+                    currentUvColor.setAttribute("style", "background: rgb(251, 118, 20);");
                 } else if (8 < data.current.uvi < 10) {
-                    currentUvColor.setAttribute("style", "background: red;");
+                    currentUvColor.setAttribute("style", "background: rgb(214, 6, 6);");
                 } else if (10 < data, current.uvi) {
-                    currentUvColor.setAttribute("style", "background: rgb(0, 153, 255);");
+                    currentUvColor.setAttribute("style", "background: rgb(120, 20, 20);");
                 };
                 uvIndex.appendChild(currentUvColor);
-
                 forecastDisp.textContent = "5-Day Forecast:";
 
-                //  five day forecast 
-                for (i = 1; i < data.daily.length - 2; i++) {
-                    var cardEl = document.createElement("ul");
+            // display five day forecast 
+            for (i = 1; i < data.daily.length - 2; i++) {
+                var cardEl = document.createElement("ul");
                     cardEl.setAttribute("id", "card");
                     fiveDayCard.appendChild(cardEl);
                     cardDate = document.createElement("h4");
                     cardDate.innerHTML = moment().add([i], "days").format("l");
                     cardEl.appendChild(cardDate);
                     currentCity.appendChild(currentTemp);
-                    var cardIcon = document.createElement("li");
+                var cardIcon = document.createElement("li");
                     cardIcon.innerHTML = '<img src="http://openweathermap.org/img/wn/' + data.daily[i].weather[0].icon + '@2x.png" width="50px" height="50px" alt="">';
                     cardEl.appendChild(cardIcon);
-                    var cardTemp = document.createElement("li");
+                var cardTemp = document.createElement("li");
                     cardTemp.textContent = "Temp: " + data.daily[i].temp.day + "°F";
                     cardEl.appendChild(cardTemp);
-                    var cardWind = document.createElement("li");
+                var cardWind = document.createElement("li");
                     cardWind.textContent = "Wind: " + data.daily[i].wind_speed + " MPH";
                     cardEl.appendChild(cardWind);
-                    var cardHum = document.createElement("li");
+                var cardHum = document.createElement("li");
                     cardHum.textContent = "Humidity: " + data.daily[i].humidity + " %";
                     cardEl.appendChild(cardHum);
-                };
+            };
 
          });
     });
@@ -139,7 +139,6 @@ var fetchWeather = function (latitude, longitude) {
 // display previous searches as buttons for user to click
 var savePreviousSearch = function () {
     previousSearchDisp.innerHTML = "";
-
     for (i = 0; i < previousSearches.length; i++) {
         var previousCity = document.createElement("p")
         previousCity.textContent = previousSearches[i];
@@ -147,9 +146,12 @@ var savePreviousSearch = function () {
         previousCity.setAttribute("id", "previous-search");
         previousSearchDisp.appendChild(previousCity);
     };
-    // save to localStorage
+    // save searches to localStorage
     saveSearch();
 };
+
+// load previous searches
+loadPrevious();
 
 // clear search history with reset button
 var searchReset = function (event) {
@@ -172,6 +174,3 @@ submitBtn.addEventListener("click", submitCity);
 
 // reset button event listener 
 resetBtn.addEventListener("click", searchReset);
-
-// load previous searches
-loadPrevious();
