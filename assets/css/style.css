@@ -4,6 +4,7 @@ header {
     padding: 1% 0;
     background: rgb(2, 0, 36);
     background: linear-gradient(90deg, rgb(10, 3, 136) 0%, rgb(37, 92, 194) 32%, rgb(250, 249, 159) 100%);
+    border-radius: 5px;
 }
 
 header h1 {
@@ -35,8 +36,9 @@ h3 {
 .search-bar {
     display: flex;
     flex-direction: column;
-    width: 20%;
+    width: 25%;
     padding: 15px;
+    margin: 0 15px 0 0;
 }
 
 #form {
@@ -62,6 +64,7 @@ h3 {
     border-radius: 5px;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: large;
+    padding: 7px;
 }
 
 #submit-city:hover {
@@ -77,6 +80,7 @@ h3 {
     border-radius: 5px;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: large;
+    padding: 7px;
 }
 
 #reset:hover {
@@ -110,6 +114,7 @@ h3 {
     margin: 5px 10px 10px 10px;
     margin-inline: 0;
     background-color: rgb(177, 177, 188);
+    padding: 7px;
     border-radius: 3px;
 }
 
@@ -123,7 +128,7 @@ h3 {
     border: 1px solid black;
     border-radius: 5px;
     padding: 10px 0 10px 15px;
-    margin: 5px;
+    margin: 15px 5px 10px 0;
 }
 
 #current-weather h3 {
