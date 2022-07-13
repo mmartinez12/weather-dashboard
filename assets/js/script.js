@@ -7,23 +7,10 @@ var forecastDisp = document.getElementById("forecast");
 var fiveDayCard = document.getElementById("five-day-card");
 var currentDay = moment().format('l');
 var previousSearches = [];
-var clickedPrevious = "";
+var clickedPrev = "";
 var apiKey = "309fbc7e18cf879d452be18a2a9572e8";
 forecastDisp.textContent = "";
 weatherDisp.textContent = "";
-
-// save the previous searches
-var saveSearch = function () {
-    localStorage.setItem('previousSearches', JSON.stringify(previousSearches));
-};
-// load the previous searches
-var loadPrevious = function () {
-    if (localStorage.getItem('previousSearches') == null) {
-        localStorage.setItem('previousSearches', JSON.stringify(previousSearches))
-    };
-    previousSearches = JSON.parse(localStorage.getItem('previousSearches'));
-    savePreviousSearch();
-};
 
 // use location API to get coordinates of city
 var fetchLocation = function (city) {
@@ -38,6 +25,20 @@ var fetchLocation = function (city) {
             fetchWeather(latitude, longitude);
             });
         });
+    savePreviousSearch();
+};
+
+// save each search
+var saveSearch = function () {
+    localStorage.setItem('previousSearches', JSON.stringify(previousSearches));
+};
+
+// load the previous searches
+var loadPrevious = function () {
+    if (localStorage.getItem('previousSearches') == null) {
+        localStorage.setItem('previousSearches', JSON.stringify(previousSearches))
+    };
+    previousSearches = JSON.parse(localStorage.getItem('previousSearches'));
     savePreviousSearch();
 };
 
@@ -64,7 +65,7 @@ var fetchWeather = function (latitude, longitude) {
             var currentCity = document.createElement("h3");
                 // check if user clicked on a previous search
                 if (previousSearches[i] == undefined) {
-                    currentCity.textContent = clickedPrevious + " (" + currentDay + ")";
+                    currentCity.textContent = clickedPrev + " (" + currentDay + ")";
                 } else {
                     currentCity.textContent = previousSearches[i] + " (" + currentDay + ")";
                 };
@@ -130,10 +131,8 @@ var fetchWeather = function (latitude, longitude) {
                     cardHum.textContent = "Humidity: " + data.daily[i].humidity + " %";
                     cardEl.appendChild(cardHum);
             };
-
          });
     });
-
 };
 
 // display previous searches as buttons for user to click
@@ -164,7 +163,7 @@ var searchReset = function (event) {
 document.addEventListener("click", function (event) {
     if (event.target.id == "previous-search") {
         var savedSearch = event.target.textContent;
-        clickedPrevious = savedSearch;
+        clickedPrev = savedSearch;
         fetchLocation(savedSearch);
     };
 });
